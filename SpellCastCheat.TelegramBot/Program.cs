@@ -95,7 +95,10 @@ class Program
 
     private static async Task ProcessImageAsync(long chatId, Stream imageStream)
     {
-        var tempImagePath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.png");
+        var tempDir = Path.GetTempPath();
+        Directory.CreateDirectory(tempDir);
+        var tempImagePath = Path.Combine(tempDir, $"{Guid.NewGuid()}.png");
+
         using (var fileStream = new FileStream(tempImagePath, FileMode.Create, FileAccess.Write))
         {
             imageStream.CopyTo(fileStream);
